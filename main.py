@@ -3,7 +3,7 @@ import numpy as np
 from pyweb import pydom
 from pyscript import display
 
-data_filename = "QuadII&III_sineFit"
+data_filename = pydom["input#filename"][0].value
 data_set = np.loadtxt(data_filename+".csv", delimiter=',')
 
 galactic_long_deg = np.zeros(data_set.shape[0])
