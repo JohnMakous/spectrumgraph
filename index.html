@@ -24,10 +24,10 @@
 		font-size: 80%;
 	}
 	
-	.data-column {
+	.file-name {
 		display: inline-block;
 		width: 100px;
-		font-size: 75%;
+		font-size: 100%;
 		background-color: rgb(240, 248, 255);
 		border-style: solid;
 		border-color: black;
@@ -60,14 +60,11 @@
 		<p style="text-align: center"><strong><font size="+1">Spectrum</font></strong></p>
 	</div>
 	
-	<div class="file-name">
-		<p style="text-align: center"><font size="+1">Spectrum</font></p>
+	<div class="file-name" label for="filename">Data file name:</label>
+			    <input type="filename" id="filename" size=10/>>
 	</div>
-			<button id="submit-button" type="submit" py-click="plot_spectrum">Plot Spectrum</button>
-			<div><br></div>
-		</div>
-	</div>
-	
+	<button id="submit-button" type="submit" py-click="plot_spectrum">Plot Spectrum</button>
+		
 	<div class="graph-block"> 
 		<div class="graph-display" id="graph"></div>
 		<div class="blank-row"><p></p></div>
