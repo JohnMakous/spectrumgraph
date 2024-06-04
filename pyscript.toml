@@ -1,1 +1,2 @@
-saddfds
+name = "Matplotlib"
+packages = ["matplotlib"]
