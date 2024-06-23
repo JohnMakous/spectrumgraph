@@ -9,10 +9,9 @@ from js import document, FileReader
 from pyodide import create_proxy
    
 def read_complete(event):
-    # event is ProgressEvent
-   
-    content = document.getElementById("content");
-    content.innerText = event.target.result
+   # event is ProgressEvent
+   content = document.getElementById("content");
+   content.innerText = event.target.result
 
    
 async def process_file(x):
