@@ -5,43 +5,31 @@ from pyscript import display
 
 import asyncio
 import js
-from js import document, FileReader
+from js import document, window, Uint8Array
 from pyodide.ffi import create_proxy
 from pyodide.ffi.wrappers import add_event_listener
    
-def read_complete(event):
-   # event is ProgressEvent
-   content = document.getElementById("content");
-   content.innerText = event.target.result
+async def upload_file_and_show(e):
+   file_list = e.target.files
+   first_item = file_list.item(0)
 
-   
-async def process_file(x):
-   fileList = document.getElementById('upload').files
-   
-   for f in fileList:
-      # reader is a pyodide.JsProxy
-      reader = FileReader.new()
-   
-      # Create a Python proxy for the callback function
-      onload_event = create_proxy(read_complete)
+   my_bytes: bytes = await get_bytes_from_file(first_item)
+   # Do something with file contents
+   print(my_bytes[:10]) 
 
-      #console.log("done")
+async def get_bytes_from_file(file):
+   # Get the File object's arrayBuffer - just an ordered iterable of the bytes of the file
+   # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer
+   array_buf = await file.arrayBuffer()
    
-      reader.onload = onload_event
+   # Use pyodide's ability to quickly copy the array buffer to a Python 'bytes' object
+   # https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsBuffer.to_bytes
+   # https://docs.python.org/3/library/stdtypes.html#bytes-objects
+   return array_buf.to_bytes()
    
-      reader.readAsText(f)
-   
-   return
-   
-def main():
-   # Create a Python proxy for the callback function
-   file_event = create_proxy(process_file)
-   
-   # Set the listener to the callback
-   e = document.getElementById("upload")
-   e.addEventListener("change", file_event, False)
-   
-   main()
+# Use pyodide's FFI to attach the function as an event listener for the file upload element
+# https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.wrappers.add_event_listener
+add_event_listener(document.getElementById("file-upload"), "change", upload_file_and_show)
 
 
 def plot_spectrum(event):
