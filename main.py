@@ -6,7 +6,8 @@ from pyscript import display
 import asyncio
 import js
 from js import document, FileReader
-from pyodide import create_proxy
+from pyodide.ffi import create_proxy
+from pyodide.ffi.wrappers import add_event_listener
    
 def read_complete(event):
    # event is ProgressEvent
