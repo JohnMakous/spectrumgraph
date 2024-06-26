@@ -1,63 +1,71 @@
 <!doctype html>
 <html>
     <head>
-        <!-- Recommended meta tags -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <!-- PyScript CSS -->
-        <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
-        <!-- CSS for examples -->
-        <link rel="stylesheet" href="./assets/css/examples.css" />
-        <!-- This script tag bootstraps PyScript -->
-        <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
-        <title>Spectrum</title>
-    </head>
-<style>
-	.master-layout{
-		width: 880px;
-	}
+	<!-- dependencies needed for Panel -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.js"></script>
+	<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.js"></script>
+	<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
+	<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/@holoviz/panel@0.13.0/dist/panel.min.js"></script>
+	<script type="text/javascript">
+	      Bokeh.set_log_level("info");
+	    </script>
+	
+	<!-- Recommended meta tags -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<!-- PyScript CSS -->
+	<link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+	<!-- CSS for examples -->
+	<link rel="stylesheet" href="./assets/css/examples.css" />
+	<!-- This script tag bootstraps PyScript -->
+	<script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+	<title>Spectrum</title>
 
-	.title{
-		margin: 1px;
-		border: 1px;
-		padding: 1px;
-		font-size: 80%;
-	}
-			
-</style>
+	<py-env>
+		-numpy
+		-pandas
+		-panel==0.13.1a2
+	</py-env>
+    </head>
 
 <body>
+    <h1>Upload csv</h1>  
 
-<h1>py-script : How to read an Image from Local File system using File Upload</h1>
-          
-            <p>Upload a csv File</p>
-            <ol>
-              <li>
-                <label for="Upload a File"></label>
-		<input type="file" id="file-upload">
-              </li>
-            </ol>
+		<div id="fileinput"></div>
+		<div id="upload"></div>
+		<div id="table"></div>
 
-          
+	<py-script>
+import asyncio
+import panel as pn
+import pandas as pd
+from panel.io.pyodide import show
 
-        <p id="content"></p>
+fileInput = pn.widgets.FileInput(accept='.csv')
+uploadButton = pn.widgets.Button(name='Upload', button_type='primary')
+		
+table = pn.widgets.Tabulator(pagination='remote', page_size=10)
 
-<!-- py-script and py-env -->
+document.getElementById('table').style.display = 'none'
 
-<!-- <py-env>
-</py-env> -->
+def process_file(event)"
+	if fileInput.value is not None:
+		table.value = pd.read_csv(io.BytesIO(fileInput.value))
+		document.getElementById('table').style.display = 'block'
+		
+uploadButton.on_click(process_file)
 
+#await is asynchronous command
+await show(fileInput, 'fileinput')
+await show(uploadButton, 'upload')	
+await show(table, 'table')
+		
+	</py-script>
 
-	
-<section class="pyscript">
-	<script type="py" src="./main.py" config="./pyscript.toml"></script>
-</section>	
-
-<!-- Output -->
-
-<div id="container">
-
-</div>
 
 </body>
 </html>
