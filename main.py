@@ -18,8 +18,8 @@ table = pn.widgets.Tabulator(pagination='remote', page_size=10)
 document.getElementById('table').style.display = 'none'
 
 async def process_file(event):
-	await if fileInput.value is not None:
-		table.value = pd.read_csv(io.BytesIO(fileInput.value))
+	if fileInput.value is not None:
+		table.value = await pd.read_csv(io.BytesIO(fileInput.value))
 		document.getElementById('table').style.display = 'block'
 		
 uploadButton.on_click(process_file)
