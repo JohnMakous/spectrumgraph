@@ -50,12 +50,12 @@ def plot_spectrum(event):
 	# signal[i] values are assigned the data_set(i,1) values
 	
 	i = 0
-  while (i < data_set.size/2):
+	while (i < data_set.size/2):
 		freq[i] = data_set[i][0]
 		signal[i] = data_set[i][1]
 		i +=1
     
-  #Plot data
+	#Plot data
     
 	font1 = {'family': 'serif',
             'color':  'darkred',
