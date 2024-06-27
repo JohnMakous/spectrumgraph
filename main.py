@@ -9,7 +9,6 @@ import asyncio
 from pyodide.ffi import create_proxy
 from pyodide.ffi.wrappers import add_event_listener
 
-
 fileInput = pn.widgets.FileInput(accept='.csv')
 uploadButton = pn.widgets.Button(name='Upload', button_type='primary')
 		
@@ -24,33 +23,9 @@ async def process_file(event):
 		
 uploadButton.on_click(process_file)
 
-show(fileInput, 'fileinput')
-show(uploadButton, 'upload')	
-show(table, 'table')
-
-
-async def upload_file_and_show(e):
-   file_list = e.target.files
-   first_item = file_list.item(0)
-
-   my_bytes: bytes = await get_bytes_from_file(first_item)
-   # Do something with file contents
-   print(my_bytes[:10]) 
-
-async def get_bytes_from_file(file):
-   # Get the File object's arrayBuffer - just an ordered iterable of the bytes of the file
-   # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer
-   array_buf = await file.arrayBuffer()
-   
-   # Use pyodide's ability to quickly copy the array buffer to a Python 'bytes' object
-   # https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsBuffer.to_bytes
-   # https://docs.python.org/3/library/stdtypes.html#bytes-objects
-   return array_buf.to_bytes()
-   
-# Use pyodide's FFI to attach the function as an event listener for the file upload element
-# https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.wrappers.add_event_listener
-add_event_listener(document.getElementById("file-upload"), "change", upload_file_and_show)
-
+await show(fileInput, 'fileinput')
+await show(uploadButton, 'upload')	
+await show(table, 'table')
 
 def plot_spectrum(event):
    data_filename = pydom["input#filename"][0].value
