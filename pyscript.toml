@@ -1,2 +1,2 @@
 name = "Matplotlib"
-packages = ["matplotlib"]
+packages = ["pandas", "bokeh==3.2.2", "matplotlib"]
