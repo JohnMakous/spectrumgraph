@@ -23,9 +23,9 @@ async def process_file(event):
 		
 uploadButton.on_click(process_file)
 
-await show(fileInput, 'fileinput')
-await show(uploadButton, 'upload')	
-await show(table, 'table')
+show(fileInput, 'fileinput')
+show(uploadButton, 'upload')	
+show(table, 'table')
 
 def plot_spectrum(event):
    data_filename = pydom["input#filename"][0].value
