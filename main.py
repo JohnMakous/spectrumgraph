@@ -1,36 +1,48 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from pyweb import pydom
-from pyscript import display
-from js import document, window
-import panel as pn
-import pandas as pd
-from panel.io.pyodide import show
 import asyncio
+import js
+from js import document, FileReader
 from pyodide.ffi import create_proxy
-from pyodide.ffi.wrappers import add_event_listener
+   
+def read_complete(event):
+	# event is ProgressEvent
+   
+    content = document.getElementById("content");
+    content.innerText = event.target.result
 
-fileInput = pn.widgets.FileInput(accept='.csv')
-uploadButton = pn.widgets.Button(name='Upload', button_type='primary')
+   
+async def process_file(x):
+	fileList = document.getElementById('upload').files
+   
+    for f in fileList:
+		# reader is a pyodide.JsProxy
+    	reader = FileReader.new()
+   
+		# Create a Python proxy for the callback function
+		onload_event = create_proxy(read_complete)
 		
-table = pn.widgets.Tabulator(pagination='remote', page_size=10)
-
-document.getElementById('table').style.display = 'none'
-
-async def process_file(event):
-	if fileInput.value is not None:
-		table.value = pd.read_csv(io.BytesIO(fileInput.value))
-		document.getElementById('table').style.display = 'block'
+		#console.log("done")
 		
-uploadButton.on_click(process_file)
-
-asyncio.run(show(fileInput, 'fileinput'))
-asyncio.run(show(uploadButton, 'upload'))	
-asyncio.run(show(table, 'table'))
+		reader.onload = onload_event
+		
+		reader.readAsText(f)
+   
+	return
+   
+def main():
+	# Create a Python proxy for the callback function
+    file_event = create_proxy(process_file)
+   
+    # Set the listener to the callback
+    e = document.getElementById("upload")
+    e.addEventListener("change", file_event, False)
+   
+main()
 
 def plot_spectrum(event):
-   data_filename = pydom["input#filename"][0].value
-   data_set = np.loadtxt(data_filename+".csv", delimiter=',')
+	data_filename = pydom["input#filename"][0].value
+	data_set = np.loadtxt(data_filename+".csv", delimiter=',')
     
    freq = np.zeros(data_set.shape[0])
    signal = np.zeros(data_set.shape[0])
