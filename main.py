@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pyweb import pydom
 from pyscript import display
+from js import document, window
 import panel as pn
 import pandas as pd
 from panel.io.pyodide import show
