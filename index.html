@@ -1,36 +1,38 @@
-<!doctype html>
-<html>
-    <head>
-		<!-- dependencies needed for Panel -->
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-		<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.js"></script>
-		<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.2.2.js"></script>
-        	<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.2.2.min.js"></script>
-        	<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.2.2.min.js"></script>
-		<script type="text/javascript" src="https://unpkg.com/@holoviz/panel@0.13.0/dist/panel.min.js"></script>
-		<script type="text/javascript">
-		      Bokeh.set_log_level("info");
-		    </script>
-		
-		<link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
-		<!-- CSS for examples -->
-		<link rel="stylesheet" href="./assets/css/examples.css" />
-		<!-- This script tag bootstraps PyScript -->
-		<script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
-		<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-	    
-		<title>Spectrum</title>
-    
-	</head>
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>py-script upload local csv</title>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <!-- CSS for examples -->
+    <link rel="stylesheet" href="./assets/css/examples.css" />
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+  </head>
+  <body>
+  
 
-<body>
-    <h1>Upload csv</h1>  
+        <h1>py-script : How to read an Image from Local File system using File Upload</h1>
 
-		<div id="fileinput"></div>
-		<div id="upload"></div>
-		<div id="table"></div>
+          
+            <p>Upload a csv File</p>
+            <ol>
+              <li>
+                <label for="upload">File Upload:</label>
+                <input type="file" name="upload" id="upload">
+              </li>
+            </ol>
+          
+          
+          
+
+        <p id="content"></p>
+
 
 <section class="pyscript">
 	<script type="py" src="./main.py" config="./pyscript.toml"></script>
