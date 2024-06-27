@@ -19,7 +19,7 @@ document.getElementById('table').style.display = 'none'
 
 async def process_file(event):
 	if fileInput.value is not None:
-		table.value = await pd.read_csv(io.BytesIO(fileInput.value))
+		table.value = pd.read_csv(io.BytesIO(fileInput.value))
 		document.getElementById('table').style.display = 'block'
 		
 uploadButton.on_click(process_file)
