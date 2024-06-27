@@ -16,7 +16,7 @@ async def process_file(x):
 	fileList = document.getElementById('upload').files
 	for f in fileList:
 		# reader is a pyodide.JsProxy
-    	reader = FileReader.new()
+		reader = FileReader.new()
    
 		# Create a Python proxy for the callback function
 		onload_event = create_proxy(read_complete)
