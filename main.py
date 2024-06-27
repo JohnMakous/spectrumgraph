@@ -14,7 +14,6 @@ def read_complete(event):
    
 async def process_file(x):
 	fileList = document.getElementById('upload').files
-   
 	for f in fileList:
 		# reader is a pyodide.JsProxy
     	reader = FileReader.new()
