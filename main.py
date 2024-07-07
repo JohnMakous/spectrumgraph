@@ -36,8 +36,6 @@ def main():
 	e = document.getElementById("upload")
 	e.addEventListener("change", file_event, False)
    
-main()
-
 def plot_spectrum(event):
 	data_filename = pydom["input#filename"][0].value
 	data_set = np.loadtxt(data_filename+".csv", delimiter=',')
@@ -94,3 +92,5 @@ def plot_spectrum(event):
     
 	plt.show()
 	display(fig, target='graph', append=False)
+
+main()
