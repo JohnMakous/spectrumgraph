@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import asyncio
 from js import document, FileReader
-from pyodide import create_proxy
+from pyodide.ffi import create_proxy
    
 def read_complete(event):
 	# event is ProgressEvent
