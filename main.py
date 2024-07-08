@@ -8,7 +8,7 @@ async def process_file(event):
 	fileList = event.target.files.to_py()
 
 	for f in fileList:
-		data = await f.text()
+		data = await asyncio.f.text()
 		document.getElementById("content").innerHTML = data
 
 def main():
