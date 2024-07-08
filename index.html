@@ -29,6 +29,10 @@
 import asyncio
 from js import document, FileReader
 from pyodide import create_proxy
+import matplotlib.pyplot as plt
+import numpy as np
+from pyweb import pydom
+from pyscript import display
 
 async def process_file(event):
 	fileList = event.target.files.to_py()
@@ -73,38 +77,6 @@ def update_graph(event):
 
 	x_label = pydom["input#xlabel"][0].value
 	y_label = pydom["input#ylabel"][0].value
-	
-	x1 = pydom["input#x1"][0].value
-	x2 = pydom["input#x2"][0].value
-	x3 = pydom["input#x3"][0].value
-	x4 = pydom["input#x4"][0].value
-	x5 = pydom["input#x5"][0].value
-	x6 = pydom["input#x6"][0].value
-	x7 = pydom["input#x7"][0].value
-	x8 = pydom["input#x8"][0].value
-	x9 = pydom["input#x9"][0].value
-	x10 = pydom["input#x10"][0].value
-	x11 = pydom["input#x11"][0].value
-	x12 = pydom["input#x12"][0].value
-	x13 = pydom["input#x13"][0].value
-	x14 = pydom["input#x14"][0].value
-	x15 = pydom["input#x15"][0].value
-
-	y1 = pydom["input#y1"][0].value
-	y2 = pydom["input#y2"][0].value
-	y3 = pydom["input#y3"][0].value
-	y4 = pydom["input#y4"][0].value
-	y5 = pydom["input#y5"][0].value
-	y6 = pydom["input#y6"][0].value
-	y7 = pydom["input#y7"][0].value
-	y8 = pydom["input#y8"][0].value
-	y9 = pydom["input#y9"][0].value
-	y10 = pydom["input#y10"][0].value
-	y11 = pydom["input#y11"][0].value
-	y12 = pydom["input#y12"][0].value
-	y13 = pydom["input#y13"][0].value
-	y14 = pydom["input#y14"][0].value
-	y15 = pydom["input#y15"][0].value
 
 	listx = [x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15]
 	listy = [y1,y2,y3,y4,y5,y6,y7,y8,y9,y10,y11,y12,y13,y14,y15]
