@@ -16,11 +16,6 @@
 <label for="myfile">Select a file:</label>
 <input type="file" id="myfile" name="myfile">
 <br />
-
-<section class="pyscript">
-	<script type="py" src="./main.py" config="./pyscript.toml"></script>
-</section>
-
 <br />
 <div id="print_output"></div>
 <br />
@@ -29,6 +24,30 @@
   <div id="content">
   </div>
 </div>
-	
+
+<py-script output="print_output">
+import asyncio
+from js import document, FileReader
+from pyodide import create_proxy
+
+async def process_file(event):
+	fileList = event.target.files.to_py()
+
+	for f in fileList:
+		data = await f.text()
+		document.getElementById("content").innerHTML = data
+
+def main():
+	# Create a Python proxy for the callback function
+	# process_file() is your function to process events from FileReader
+	file_event = create_proxy(process_file)
+
+	# Set the listener to the callback
+	e = document.getElementById("myfile")
+	e.addEventListener("change", file_event, False)
+
+main()
+</py-script>
+
 </body>
 </html>
