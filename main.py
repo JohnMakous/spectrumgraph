@@ -9,20 +9,12 @@ def read_complete(event):
 	content = document.getElementById("content");
 	content.innerText = event.target.result
 
-async def process_file(x):
-	fileList = document.getElementById('upload').files
+async def process_file(event):
+	fileList = event.target.files.to_py()
+
 	for f in fileList:
-		# reader is a pyodide.JsProxy
-		reader = FileReader.new()
-   
-		# Create a Python proxy for the callback function
-		onload_event = create_proxy(read_complete)
-		
-		#console.log("done")
-		
-		reader.onload = onload_event
-		reader.readAsText(f)
-	return
+		data = await f.text()
+		document.getElementById("content").innerHTML = data
    
 def main():
 	# Create a Python proxy for the callback function
