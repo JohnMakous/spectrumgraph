@@ -23,6 +23,17 @@ def main():
 	# Set the listener to the callback
 	e = document.getElementById("upload")
 	e.addEventListener("change", file_event, False)
+
+
+def main():
+	# Create a Python proxy for the callback function
+	# process_file() is your function to process events from FileReader
+	file_event = create_proxy(process_file)
+
+	# Set the listener to the callback
+	e = document.getElementById("upload")
+	e.addEventListener("change", file_event, False)
+
    
 def plot_spectrum(event):
 	data_filename = pydom["input#filename"][0].value
