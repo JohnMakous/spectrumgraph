@@ -10,15 +10,6 @@ async def process_file(event):
 	for f in fileList:
 		data = await f.text()
 		document.getElementById("content").innerHTML = data
-   
-def main():
-	# Create a Python proxy for the callback function
-	file_event = create_proxy(process_file)
-   
-	# Set the listener to the callback
-	e = document.getElementById("upload")
-	e.addEventListener("change", file_event, False)
-
 
 def main():
 	# Create a Python proxy for the callback function
