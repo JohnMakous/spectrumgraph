@@ -46,7 +46,120 @@ def main():
 	e = document.getElementById("myfile")
 	e.addEventListener("change", file_event, False)
 
+def update_graph(event):
+	if pydom["input#xmin"][0].value != "":
+		x_min = pydom["input#xmin"][0].value
+		x_min = float(x_min)
+	else:
+		x_min = 0
+	
+	if pydom["input#xmax"][0].value != "":
+		x_max = pydom["input#xmax"][0].value
+		x_max= float(x_max)
+	else:
+		x_max = 10
+
+	if pydom["input#ymin"][0].value != "":
+		y_min = pydom["input#ymin"][0].value
+		y_min = float(y_min)
+	else:
+		y_min = 0
+	
+	if pydom["input#ymax"][0].value != "":
+		y_max = pydom["input#ymax"][0].value
+		y_max= float(y_max)
+	else:
+		y_max = 10
+
+	x_label = pydom["input#xlabel"][0].value
+	y_label = pydom["input#ylabel"][0].value
+	
+	x1 = pydom["input#x1"][0].value
+	x2 = pydom["input#x2"][0].value
+	x3 = pydom["input#x3"][0].value
+	x4 = pydom["input#x4"][0].value
+	x5 = pydom["input#x5"][0].value
+	x6 = pydom["input#x6"][0].value
+	x7 = pydom["input#x7"][0].value
+	x8 = pydom["input#x8"][0].value
+	x9 = pydom["input#x9"][0].value
+	x10 = pydom["input#x10"][0].value
+	x11 = pydom["input#x11"][0].value
+	x12 = pydom["input#x12"][0].value
+	x13 = pydom["input#x13"][0].value
+	x14 = pydom["input#x14"][0].value
+	x15 = pydom["input#x15"][0].value
+
+	y1 = pydom["input#y1"][0].value
+	y2 = pydom["input#y2"][0].value
+	y3 = pydom["input#y3"][0].value
+	y4 = pydom["input#y4"][0].value
+	y5 = pydom["input#y5"][0].value
+	y6 = pydom["input#y6"][0].value
+	y7 = pydom["input#y7"][0].value
+	y8 = pydom["input#y8"][0].value
+	y9 = pydom["input#y9"][0].value
+	y10 = pydom["input#y10"][0].value
+	y11 = pydom["input#y11"][0].value
+	y12 = pydom["input#y12"][0].value
+	y13 = pydom["input#y13"][0].value
+	y14 = pydom["input#y14"][0].value
+	y15 = pydom["input#y15"][0].value
+
+	listx = [x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15]
+	listy = [y1,y2,y3,y4,y5,y6,y7,y8,y9,y10,y11,y12,y13,y14,y15]
+	
+	# Identify x input elements from data table that are numeric; store in an array
+	x_list=[]
+	i=0
+	while (i<len(listx)):
+		if is_float(listx[i])== False:
+			i=i+1
+		else:
+			a = remove(listx[i])
+			x_list.append(float(a))
+			i=i+1
+
+	# Identify y input elements from data table that are numeric; store in an array
+	y_list=[]
+	i=0
+	while (i<len(listy)):
+		if is_float(listy[i])== False:
+			i=i+1
+		else:
+			a = remove(listy[i])
+			y_list.append(float(a))
+			i=i+1
+	
+	#store float values from data table lists into arrays
+	xfloat = np.array(x_list)
+	yfloat = np.array(y_list)
+	
+	#xfloat = x		# [float(i) for i in x]
+	#yfloat = y		# [float(i) for i in y]
+
+	fig1, ax1 = plt.subplots(1, dpi=150, figsize=(3,2.5))
+	ax1.scatter(xfloat,yfloat, 10)
+	plt.title(y_label + " vs. "+ x_label, fontsize=6)
+	#plt.xlabel(x_label, fontsize=6)  
+	#plt.ylabel(y_label, fontsize=6)
+	ax1.set_xlabel(x_label, fontsize=6, labelpad=1)
+	ax1.set_ylabel(y_label, fontsize=6, labelpad=1)
+	ax1.set_xlim(x_min, x_max)
+	ax1.set_ylim(y_min, y_max)
+	ax1.tick_params(axis='x', labelsize=4)
+	ax1.tick_params(axis='y', labelsize=4)
+	ax1.margins(1)
+	ax1.grid()
+
+	plt.close('all')
+	
+	display(fig1, target='graph', append=False)
+
 main()
+
+update_graph()
+
 </py-script>
 
 </body>
