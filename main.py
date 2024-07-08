@@ -3,11 +3,6 @@ import numpy as np
 import asyncio
 from js import document, FileReader
 from pyodide.ffi import create_proxy
-   
-def read_complete(event):
-	# event is ProgressEvent
-	content = document.getElementById("content");
-	content.innerText = event.target.result
 
 async def process_file(event):
 	fileList = event.target.files.to_py()
