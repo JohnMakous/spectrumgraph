@@ -2,15 +2,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import asyncio
 import js
-from js import document, FileReader
+from js import console, document, FileReader
 from pyodide.ffi import create_proxy
+from pyodide.ffi.wrappers import add_event_listener
+
    
 def read_complete(event):
 	# event is ProgressEvent
 	content = document.getElementById("content");
 	content.innerText = event.target.result
 
-   
 async def process_file(x):
 	fileList = document.getElementById('upload').files
 	for f in fileList:
@@ -23,9 +24,7 @@ async def process_file(x):
 		#console.log("done")
 		
 		reader.onload = onload_event
-		
 		reader.readAsText(f)
-   
 	return
    
 def main():
@@ -34,7 +33,7 @@ def main():
    
 	# Set the listener to the callback
 	e = document.getElementById("upload")
-	e.addEventListener("change", file_event, False)
+	e.add_event_listener("change", file_event, False)
    
 def plot_spectrum(event):
 	data_filename = pydom["input#filename"][0].value
