@@ -33,7 +33,7 @@ def main():
    
 	# Set the listener to the callback
 	e = document.getElementById("upload")
-	e.add_event_listener("change", file_event, False)
+	add_event_listener(e,"change", file_event)
    
 def plot_spectrum(event):
 	data_filename = pydom["input#filename"][0].value
