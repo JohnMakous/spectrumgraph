@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="en-US">
-	
+<html>
 <head>
 <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
 <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 <title>File Example</title>
 </head>
+<body>
 
+<p>This example shows how to read a file from the local file system and display its contents</p>
 <br />
-<label for="upload">Select a file:</label>
-<input type="file" id="upload" name="upload">
+<p>Warning: Not every file type will display. PyScript removes content with tags such as XML, HTML, PHP, etc. Normal text files will work.</p>
+<br />
+<p>No content type checking is performed to detect images, executables, etc.</p>
+<br />
+<label for="myfile">Select a file:</label>
+<input type="file" id="myfile" name="myfile">
 <br />
 <br />
 <div id="print_output"></div>
@@ -20,9 +25,29 @@
   </div>
 </div>
 
-<section class="pyscript" output="print_output">
-	<script type="py" src="./main.py" config="./pyscript.toml"></script>
-</section>
+<py-script output="print_output">
+import asyncio
+from js import document, FileReader
+from pyodide import create_proxy
+
+async def process_file(event):
+	fileList = event.target.files.to_py()
+
+	for f in fileList:
+		data = await f.text()
+		document.getElementById("content").innerHTML = data
+
+def main():
+	# Create a Python proxy for the callback function
+	# process_file() is your function to process events from FileReader
+	file_event = create_proxy(process_file)
+
+	# Set the listener to the callback
+	e = document.getElementById("myfile")
+	e.addEventListener("change", file_event, False)
+
+main()
+</py-script>
 
 </body>
 </html>
