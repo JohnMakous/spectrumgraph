@@ -1,14 +1,12 @@
-import matplotlib.pyplot as plt
-import numpy as np
 import asyncio
 from js import document, FileReader
-from pyodide.ffi import create_proxy
+from pyodide import create_proxy
 
 async def process_file(event):
 	fileList = event.target.files.to_py()
 
 	for f in fileList:
-		data = await asyncio.f.text()
+		data = await f.text()
 		document.getElementById("content").innerHTML = data
 
 def main():
@@ -17,10 +15,9 @@ def main():
 	file_event = create_proxy(process_file)
 
 	# Set the listener to the callback
-	e = document.getElementById("upload")
+	e = document.getElementById("myfile")
 	e.addEventListener("change", file_event, False)
 
-   
 def plot_spectrum(event):
 	data_filename = pydom["input#filename"][0].value
 	data_set = np.loadtxt(data_filename+".csv", delimiter=',')
