@@ -5,7 +5,6 @@ import js
 from js import console, document, FileReader
 from pyodide.ffi import create_proxy
 from pyodide.ffi.wrappers import add_event_listener
-
    
 def read_complete(event):
 	# event is ProgressEvent
@@ -29,7 +28,7 @@ async def process_file(x):
    
 def main():
 	# Create a Python proxy for the callback function
-	file_event = create_proxy(process_file)
+	file_event = pyodide.ffi.create_proxy(process_file)
    
 	# Set the listener to the callback
 	e = document.getElementById("upload")
