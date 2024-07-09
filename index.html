@@ -1,113 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-<title>File Example</title>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@holoviz/panel@0.13.0/dist/panel.min.js"></script>
+    <script type="text/javascript">
+      Bokeh.set_log_level("info");
+    </script>
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.05.1/pyscript.js" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-env>
+        - numpy
+        - pandas
+        - panel==0.13.1a2
+    </py-env>
 </head>
 <body>
+  <h1>Upload csv</h1>
+          
+                <div id="fileinput"></div>
+                <div id="upload"></div>
+                <div id="table"></div>
 
-<p>This example shows how to read a file from the local file system and display its contents</p>
-<br />
-<p>Warning: Not every file type will display. PyScript removes content with tags such as XML, HTML, PHP, etc. Normal text files will work.</p>
-<br />
-<p>No content type checking is performed to detect images, executables, etc.</p>
-<br />
-<label for="myfile">Select a file:</label>
-<input type="file" id="myfile" name="myfile">
-<br />
-<br />
-<div id="print_output"></div>
-<br />
-<p>File Content:</p>
-<div style="border:2px inset #AAA;cursor:text;height:120px;overflow:auto;width:600px; resize:both">
-  <div id="content">
-  </div>
-</div>
 
-<py-script output="print_output">
+	<py-script>
 import asyncio
-from js import document, FileReader
-from pyodide import create_proxy
+import panel as pn
+import pandas as pd
+from panel.io.pyodide import write
 import matplotlib.pyplot as plt
-import numpy as np
-from pyweb import pydom
-from pyscript import display
 
-async def process_file(event):
-	fileList = event.target.files.to_py()
+# Input file
+fileInput = pn.widgets.FileInput(accept='.csv')
+uploadButton = pn.widgets.Button(name='Upload', button_type = 'primary')
 
-	for f in fileList:
-		data = await f.text()
-		document.getElementById("content").innerHTML = data
+table = pn.widgets.Tabulator(pagination='remote', page_size=10)
+		
+# Set the table display to None because it has nothing to display
+document.getElementById('table').style.display = 'none'
 
-def main():
-	# Create a Python proxy for the callback function
-	# process_file() is your function to process events from FileReader
-	file_event = create_proxy(process_file)
+def process_file(event):
+    if fileInput.value is not None:
+        table.value = pd.read_csv(io.BytesIO(fileInput.value))
+		# replace the table display to not None because it has something to display now
+        document.getElementById('table').style.display = 'block'
 
-	# Set the listener to the callback
-	e = document.getElementById("myfile")
-	e.addEventListener("change", file_event, False)
+uploadButton.on_click(process_file)
 
-def update_graph(event):
-	res = [int(i) for i in data.split() if i.isdigit()]
-
-	listx = [x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15]
-	listy = [y1,y2,y3,y4,y5,y6,y7,y8,y9,y10,y11,y12,y13,y14,y15]
-	
-	# Identify x input elements from data table that are numeric; store in an array
-	x_list=[]
-	i=0
-	while (i<len(listx)):
-		if is_float(listx[i])== False:
-			i=i+1
-		else:
-			a = remove(listx[i])
-			x_list.append(float(a))
-			i=i+1
-
-	# Identify y input elements from data table that are numeric; store in an array
-	y_list=[]
-	i=0
-	while (i<len(listy)):
-		if is_float(listy[i])== False:
-			i=i+1
-		else:
-			a = remove(listy[i])
-			y_list.append(float(a))
-			i=i+1
-	
-	#store float values from data table lists into arrays
-	xfloat = np.array(x_list)
-	yfloat = np.array(y_list)
-	
-	#xfloat = x		# [float(i) for i in x]
-	#yfloat = y		# [float(i) for i in y]
-
-	fig1, ax1 = plt.subplots(1, dpi=150, figsize=(3,2.5))
-	ax1.scatter(xfloat,yfloat, 10)
-	plt.title(y_label + " vs. "+ x_label, fontsize=6)
-	#plt.xlabel(x_label, fontsize=6)  
-	#plt.ylabel(y_label, fontsize=6)
-	ax1.set_xlabel(x_label, fontsize=6, labelpad=1)
-	ax1.set_ylabel(y_label, fontsize=6, labelpad=1)
-	ax1.set_xlim(x_min, x_max)
-	ax1.set_ylim(y_min, y_max)
-	ax1.tick_params(axis='x', labelsize=4)
-	ax1.tick_params(axis='y', labelsize=4)
-	ax1.margins(1)
-	ax1.grid()
-
-	plt.close('all')
-	
-	display(fig1, target='graph', append=False)
-
-main()
-
-update_graph()
-
-</py-script>
+await write(fileInput, 'fileinput')
+await write(uploadButton, 'upload')
+await write(table, 'table')
+		
+plt.close("all")
+	</py-script>
 
 </body>
 </html>
