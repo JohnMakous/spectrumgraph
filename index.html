@@ -40,13 +40,23 @@
 </head>
 	
 <body>
-  <h1>Upload csv</h1>
+  <!-- Old code: <h1>Upload csv</h1>
           
                 <div id="fileinput"></div>
                 <div id="upload"></div>
                 <div id="table"></div>
+	 -->
 
+<!-- Try different upload file method -->
+<p>Upload a csv File</p>
+            <ol>
+              <li>
+                <label for="fileinput">File Upload:</label>
+                <input type="file" name="fileinput" id="fileinput">
+              </li>
+            </ol>
 
+	
 	<py-script>
 import asyncio
 import panel as pn
@@ -54,6 +64,9 @@ import pandas as pd
 from panel.io.pyodide.ffi import write
 import matplotlib.pyplot as plt
 
+def loadFile(event):
+    table.value = pd.read_csv(io.BytesIO(fileInput.value))
+		
 async def process_file(event):
     if fileInput.value is not None:
         table.value = pd.read_csv(io.BytesIO(fileInput.value))
