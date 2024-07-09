@@ -63,12 +63,15 @@ from panel.io.pyodide.ffi import write
 import matplotlib.pyplot as plt
 		
 def process_file(event):
-    if fileInput.value is not None:
-        df = pd.read_csv(fileinput.value)
+	filename = document.getElementById('fileinput').files
+    df = pd.read_csv(filename)
 	print(df.to_string()) 
 
 async def main():	
 	await process_file()
+
+const inputElement = document.getElementById("fileinput");
+inputElement.addEventListener("change", process_file, false);
 
 <!-- 
 # Input file
