@@ -64,10 +64,7 @@ import pandas as pd
 from panel.io.pyodide.ffi import write
 import matplotlib.pyplot as plt
 		
-loadFile(event):
-    table.value = pd.read_csv(io.BytesIO(fileInput.value))
-		
-async def process_file(event):
+def process_file(event):
     if fileInput.value is not None:
         table.value = pd.read_csv(io.BytesIO(fileInput.value))
 		# replace the table display to not None because it has something to display now
