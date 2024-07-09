@@ -44,7 +44,7 @@ import panel as pn
 from panel.io.pyodide import show
 import matplotlib.pyplot as plt
 
-await micropip.install("pandas")
+micropip.install("pandas")
 		
 def process_file(event):
 	if fileInput.value is not None:
