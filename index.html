@@ -58,7 +58,7 @@ table = pn.widgets.Tabulator(pagination='remote', page_size=10)
 # Set the table display to None because it has nothing to display
 document.getElementById('table').style.display = 'none'
 
-def process_file(event):
+async def process_file(event):
     if fileInput.value is not None:
         table.value = pd.read_csv(io.BytesIO(fileInput.value))
 	# replace the table display to not None because it has something to display now
@@ -70,7 +70,7 @@ await write(fileInput, 'fileinput')
 await write(uploadButton, 'upload')
 await write(table, 'table')
 		
-plt.close("all")
+#plt.close("all")
 	</py-script>
 
 </body>
