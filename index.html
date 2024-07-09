@@ -62,11 +62,14 @@ async def process_file(event):
 	# replace the table display to not None because it has something to display now
         document.getElementById('table').style.display = 'block'
 
+async def main():
+    await write(fileInput, 'fileinput')
+	await write(uploadButton, 'upload')
+	await write(table, 'table')
+
 uploadButton.on_click(process_file)
 
-await write(fileInput, 'fileinput')
-await write(uploadButton, 'upload')
-await write(table, 'table')
+main()
 		
 #plt.close("all")
 	</py-script>
