@@ -67,18 +67,20 @@ def process_file(event):
     df = pd.read_csv(filename)
 	print(df.to_string()) 
 
-async def main():	
-	await process_file()
-
-const inputElement = document.getElementById("fileinput");
-inputElement.addEventListener("change", process_file, false);
+def main():
+		# Create a Python proxy for the callback function
+		file_event = create_proxy(process_file)
+		
+		# Set the listener to the callback
+		e = document.getElementById("fileinput")
+		e.addEventListener("change", file_event, False)
 
 <!-- 
-# Input file
-fileInput = pn.widgets.FileInput(accept='.csv')
-uploadButton = pn.widgets.Button(name='Upload', button_type = 'primary')
-		
-uploadButton.on_click(process_file)
+		# Input file
+		fileInput = pn.widgets.FileInput(accept='.csv')
+		uploadButton = pn.widgets.Button(name='Upload', button_type = 'primary')
+				
+		uploadButton.on_click(process_file)
  -->	
 		
 main()
