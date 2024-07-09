@@ -38,22 +38,22 @@
 </head>
 	
 <body>
-  <h1>Upload csv</h1>
+  <!-- <h1>Upload csv</h1>
           
                 <div id="fileinput"></div>
                 <div id="upload"></div>
                 <div id="table"></div>
-	
+	-->
 
 <!-- Try different upload file method -->
-<!-- <p>Upload a csv File</p>
+<p>Upload a csv File</p>
             <ol>
               <li>
                 <label for="fileinput">File Upload:</label>
                 <input type="file" name="fileinput" id="fileinput">
               </li>
             </ol>
- -->
+ 
 	
 	<py-script>
 import asyncio
@@ -64,19 +64,19 @@ import matplotlib.pyplot as plt
 		
 def process_file(event):
     if fileInput.value is not None:
-        df = pd.read_csv(io.BytesIO(fileInput.value))
+        df = pd.read_csv(fileinput.value)
 	print(df.to_string()) 
 
 async def main():	
-	await write(fileInput, 'fileinput')
-	await write(uploadButton, 'upload')
-	await write(table, 'table')
+	await process_file()
 
+<!-- 
 # Input file
 fileInput = pn.widgets.FileInput(accept='.csv')
 uploadButton = pn.widgets.Button(name='Upload', button_type = 'primary')
 		
 uploadButton.on_click(process_file)
+ -->	
 		
 main()
 		
