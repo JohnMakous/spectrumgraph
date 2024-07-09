@@ -64,7 +64,7 @@ import pandas as pd
 from panel.io.pyodide.ffi import write
 import matplotlib.pyplot as plt
 		
-def loadFile(event):
+loadFile(event):
     table.value = pd.read_csv(io.BytesIO(fileInput.value))
 		
 async def process_file(event):
