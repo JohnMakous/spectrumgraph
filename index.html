@@ -68,12 +68,8 @@ def process_file(event):
 	print(df.to_string()) 
 
 def main():
-		# Create a Python proxy for the callback function
-		file_event = create_proxy(process_file)
-		
-		# Set the listener to the callback
-		e = document.getElementById("fileinput")
-		e.addEventListener("change", file_event, False)
+	const inputElement = document.getElementById("input");
+	inputElement.addEventListener("change", process_file, false);
 
 <!-- 
 		# Input file
