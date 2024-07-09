@@ -25,7 +25,7 @@
     <py-env>
         - numpy
         - pandas
-		- panel==0.13.1a2
+	- panel==0.13.1a2
     </py-env>
 	
 </head>
@@ -43,6 +43,8 @@ import pandas as pd
 import panel as pn
 from panel.io.pyodide import show
 import matplotlib.pyplot as plt
+
+await micropip.install("pandas")
 		
 def process_file(event):
 	if fileInput.value is not None:
