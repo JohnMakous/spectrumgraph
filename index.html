@@ -48,7 +48,7 @@ document.getElementById('table').style.display = 'none'
 def process_file(event):
     if fileInput.value is not None:
         table.value = pd.read_csv(io.BytesIO(fileInput.value))
-		# replace the table display to not None because it has something to display now
+	# replace the table display to not None because it has something to display now
         document.getElementById('table').style.display = 'block'
 
 uploadButton.on_click(process_file)
