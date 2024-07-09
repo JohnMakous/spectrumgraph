@@ -42,9 +42,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 		
 def process_file(event):
-	filename = document.getElementById('fileinput').files
-    df = pd.read_csv(filename)
-	print(df.to_string()) 
+	filename = document.getElementById('fileinput').files;
+	df = pd.read_csv(filename);
+	print(df.to_string());
 
 def main():
 	const inputElement = document.getElementById("input");
