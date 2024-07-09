@@ -57,8 +57,8 @@ import matplotlib.pyplot as plt
 		
 def process_file(event):
 	if fileInput.value is not None:
-        table.value = pd.read_csv(io.BytesIO(fileInput.value))
-        #document.getElementById('table').style.display = 'block'
+		table.value = pd.read_csv(io.BytesIO(fileInput.value))
+		#document.getElementById('table').style.display = 'block'
 		df = pd.read_csv(fileInput.value)
 		print(df.to_string())
 
