@@ -54,30 +54,28 @@ import pandas as pd
 from panel.io.pyodide.ffi import write
 import matplotlib.pyplot as plt
 
-
-
 async def process_file(event):
     if fileInput.value is not None:
         table.value = pd.read_csv(io.BytesIO(fileInput.value))
-	# replace the table display to not None because it has something to display now
+		# replace the table display to not None because it has something to display now
         document.getElementById('table').style.display = 'block'
 
-async def main():
-	# Input file
-	fileInput = pn.widgets.FileInput(accept='.csv')
-	uploadButton = pn.widgets.Button(name='Upload', button_type = 'primary')
-
-	table = pn.widgets.Tabulator(pagination='remote', page_size=10)
-		
-	# Set the table display to None because it has nothing to display
-	document.getElementById('table').style.display = 'none'
-	
-	uploadButton.on_click(process_file)
-		
+async def main():	
 	await write(fileInput, 'fileinput')
 	await write(uploadButton, 'upload')
 	await write(table, 'table')
 
+# Input file
+fileInput = pn.widgets.FileInput(accept='.csv')
+uploadButton = pn.widgets.Button(name='Upload', button_type = 'primary')
+
+table = pn.widgets.Tabulator(pagination='remote', page_size=10)
+	
+# Set the table display to None because it has nothing to display
+document.getElementById('table').style.display = 'none'
+		
+uploadButton.on_click(process_file)
+		
 main()
 		
 #plt.close("all")
