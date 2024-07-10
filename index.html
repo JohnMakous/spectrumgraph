@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	<!-- Recommended meta tags -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -9,66 +8,68 @@
 	<link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
 	<!-- This script tag bootstraps PyScript -->
 	<script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
-	<title>Graph CSV Data</title>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/@holoviz/panel@0.13.0/dist/panel.min.js"></script>
-    <script type="text/javascript">
-      Bokeh.set_log_level("info");
-    </script>
-
-    <py-env>
-        - numpy
-        - pandas
-		- panel==0.13.1a2
-    </py-env>
-	
 </head>
-	
+   
 <body>
-<h1>Upload csv</h1>
-          
-                <div id="fileinput"></div>
-                <div id="upload"></div>
-                <div id="table"></div>
+	<py-config>
+      packages = ["pandas", "matplotlib"]
+	</py-config>
 	
-	<py-script>
-import asyncio
+<div class="row overflow-hidden" id="content">
+    <div class="col mh-100 float-left" id="main">
+        <div id="fileinput"></div>
+        <input type="file" name="upload" id="upload">
+    </div>
+</div>
+
+<div id="graph"></div>
+
+<py-script>
+from js import document
+from io import BytesIO
 import pandas as pd
-import panel as pn
-from panel.io.pyodide import show
 import matplotlib.pyplot as plt
-import micropip
+import numpy as np
+from pyscript import display
+from pyscript import when
 
-micropip.install("pandas")
-		
-def process_file(event):
-	if fileInput.value is not None:
-		table.value = pd.read_csv(io.BytesIO(fileInput.value))
-		#document.getElementById('table').style.display = 'block'
-		df = pd.read_csv(fileInput.value)
-		print(df.to_string())
+@when('change', '#upload')
+	
+async def processFile(*args):
+	csv_file = document.getElementById('upload').files.item(0)
+	
+	array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
+	file_bytes = array_buf.to_bytes() # convert to raw bytes array 
+	csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
+	
+	# Read the CSV file into a Pandas DataFrame
+	df = pd.read_csv(csv_file)
+	#display(df)
+	
+	dataArray = df.to_numpy()
+	x = dataArray[:,0]
+	y = dataArray[:,1]
 
-async def main():
-	await show(fileInput, 'fileinput')
-	await show(uploadButton, 'upload')
-	await show(table, 'table')
+	fig1, ax1 = plt.subplots(1, dpi=150, figsize=(6,4))
+	plt.plot(x, y, linewidth=1)
+	#ax1.scatter(x, y, 1)
+	plt.title("Signal vs Frequency", fontsize=6)
+	#plt.xlabel(x_label, fontsize=6)  
+	#plt.ylabel(y_label, fontsize=6)
+	ax1.set_xlabel("Frequency", fontsize=6, labelpad=1)
+	ax1.set_ylabel("Signal", fontsize=6, labelpad=1)
+	ax1.set_xlim(1419, 1422)
+	#ax1.set_ylim(y_min, y_max)
+	ax1.tick_params(axis='x', labelsize=4)
+	ax1.tick_params(axis='y', labelsize=4)
+	#ax1.margins(1)
+	ax1.grid()
 
-# Input file
-fileInput = pn.widgets.FileInput(accept='.csv')
-uploadButton = pn.widgets.Button(name='Upload', button_type = 'primary')
-		
-uploadButton.on_click(process_file)	
-		
-main()
-		
-#plt.close("all")
-	</py-script>
+	plt.close('all')
+	
+	display(fig1, target='graph', append=False)
+
+</py-script>
 
 </body>
 </html>
