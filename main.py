@@ -67,7 +67,7 @@ async def processFile(*args):
 	
 	display(fig1, target='graph', append=False)
 
-def update_graph(x,y):
+def update_graph(df):
 	if pydom["input#xmin"][0].value != "":
 		x_min = pydom["input#xmin"][0].value
 		x_min = float(x_min)
@@ -91,7 +91,10 @@ def update_graph(x,y):
 		y_max= float(y_max)
 	else:
 		y_max = 200
-	
+		
+	dataArray = df.to_numpy()
+	x = dataArray[:,0]
+	y = dataArray[:,1]
 	fig1, ax1 = plt.subplots(1, dpi=150, figsize=(6,4))
 	plt.plot(x, y, linewidth=1)
 	#ax1.scatter(x, y, 1)
