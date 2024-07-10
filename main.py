@@ -67,7 +67,7 @@ async def processFile(*args):
 	
 	display(fig1, target='graph', append=False)
 
-async def update_graph(*args):
+def update_graph(*args):
 	if pydom["input#xmin"][0].value != "":
 		x_min = pydom["input#xmin"][0].value
 		x_min = float(x_min)
