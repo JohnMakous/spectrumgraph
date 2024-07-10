@@ -33,20 +33,6 @@ async def processFile(*args):
 		y_max= float(y_max)
 	else:
 		y_max = 200
-		
-	csv_file = document.getElementById('upload').files.item(0)
-	
-	array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
-	file_bytes = array_buf.to_bytes() # convert to raw bytes array 
-	csv_file = BytesIO(file_bytes) # Wrap in Python BytesIO file-like object
-	
-	# Read the CSV file into a Pandas DataFrame
-	df = pd.read_csv(csv_file)
-	#display(df)
-	
-	dataArray = df.to_numpy()
-	x = dataArray[:,0]
-	y = dataArray[:,1]
 
 	fig1, ax1 = plt.subplots(1, dpi=150, figsize=(6,4))
 	plt.plot(x, y, linewidth=1)
