@@ -10,6 +10,30 @@ from pyweb import pydom
 @when('change', '#upload')
 
 async def processFile(*args):
+	if pydom["input#xmin"][0].value != "":
+		x_min = pydom["input#xmin"][0].value
+		x_min = float(x_min)
+	else:
+		x_min = 1419
+	
+	if pydom["input#xmax"][0].value != "":
+		x_max = pydom["input#xmax"][0].value
+		x_max= float(x_max)
+	else:
+		x_max = 1422
+
+	if pydom["input#ymin"][0].value != "":
+		y_min = pydom["input#ymin"][0].value
+		y_min = float(y_min)
+	else:
+		y_min = 0
+	
+	if pydom["input#ymax"][0].value != "":
+		y_max = pydom["input#ymax"][0].value
+		y_max= float(y_max)
+	else:
+		y_max = 200
+		
 	csv_file = document.getElementById('upload').files.item(0)
 	
 	array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
@@ -32,8 +56,8 @@ async def processFile(*args):
 	#plt.ylabel(y_label, fontsize=6)
 	ax1.set_xlabel("Frequency", fontsize=6, labelpad=1)
 	ax1.set_ylabel("Signal", fontsize=6, labelpad=1)
-	ax1.set_xlim(1419, 1422)
-	#ax1.set_ylim(y_min, y_max)
+	ax1.set_xlim(x_min, x_max)
+	ax1.set_ylim(y_min, y_max)
 	ax1.tick_params(axis='x', labelsize=4)
 	ax1.tick_params(axis='y', labelsize=4)
 	#ax1.margins(1)
@@ -67,6 +91,7 @@ async def update_graph(*args):
 		y_max= float(y_max)
 	else:
 		y_max = 200
+	
 	csv_file = document.getElementById('upload').files.item(0)
 	
 	array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
