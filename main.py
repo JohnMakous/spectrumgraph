@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pyscript import display
 from pyscript import when
+from pyweb import pydom
 
 @when('change', '#upload')
 
@@ -43,6 +44,29 @@ async def processFile(*args):
 	display(fig1, target='graph', append=False)
 
 async def update_graph(*args):
+	if pydom["input#xmin"][0].value != "":
+		x_min = pydom["input#xmin"][0].value
+		x_min = float(x_min)
+	else:
+		x_min = 1419
+	
+	if pydom["input#xmax"][0].value != "":
+		x_max = pydom["input#xmax"][0].value
+		x_max= float(x_max)
+	else:
+		x_max = 1422
+
+	if pydom["input#ymin"][0].value != "":
+		y_min = pydom["input#ymin"][0].value
+		y_min = float(y_min)
+	else:
+		y_min = 0
+	
+	if pydom["input#ymax"][0].value != "":
+		y_max = pydom["input#ymax"][0].value
+		y_max= float(y_max)
+	else:
+		y_max = 200
 	csv_file = document.getElementById('upload').files.item(0)
 	
 	array_buf = await csv_file.arrayBuffer() # Get arrayBuffer from file
