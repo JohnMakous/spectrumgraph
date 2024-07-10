@@ -60,32 +60,32 @@
 </div>
 
 <div class="graph-block"> 
-		<div class="graph-display" id="graph"></div>
-		<div class="graph-settings"> 
-			<table border=2>
-			  <tr>
-			    <td  colspan="2">Graph Settings</td>
-			  </tr>
-			  <tr>
-			    <td><label for="xmin">xmin</label></td>
-			    <td><input type="xmin" id="xmin" size=8/></td>
-			  </tr>
-			  <tr> 
-			    <td><label for="xmax">xmax</label></td>
-			    <td><input type="xmax" id="xmax" size=8/></td>
-			  </tr>
-			  <tr>
-			    <td><label for="ymin">ymin</label></td>
-			    <td><input type="ymin" id="ymin" size=8/></td>
-			  </tr>
-			  <tr> 
-			    <td><label for="ymax">ymax</label></td>
-			    <td><input type="ymax" id="ymax" size=8/></td>
-			  </tr>
-			</table>
-			<button id="submit-button" type="submit" py-click="processFile">Update graph settings</button>
-		</div>
+	<div class="graph-display" id="graph"></div>
+	<div class="graph-settings"> 
+		<table border=2>
+		  <tr>
+			<td  colspan="2">Graph Settings</td>
+		  </tr>
+		  <tr>
+			<td><label for="xmin">xmin</label></td>
+			<td><input type="xmin" id="xmin" size=8/></td>
+		  </tr>
+		  <tr> 
+			<td><label for="xmax">xmax</label></td>
+			<td><input type="xmax" id="xmax" size=8/></td>
+		  </tr>
+		  <tr>
+			<td><label for="ymin">ymin</label></td>
+			<td><input type="ymin" id="ymin" size=8/></td>
+		  </tr>
+		  <tr> 
+			<td><label for="ymax">ymax</label></td>
+			<td><input type="ymax" id="ymax" size=8/></td>
+		  </tr>
+		</table>
+		<button id="submit-button" type="submit" py-click="processFile">Update graph settings</button>
 	</div>
+</div>
 
 <section class="pyscript">
 	<script type="py" src="./main.py" config="./pyscript.toml"></script>
