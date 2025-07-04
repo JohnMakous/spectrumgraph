@@ -9,7 +9,74 @@
 	<!-- This script tag bootstraps PyScript -->
 	<script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
 </head>
+<style>
+	.grid-container {
+		display: grid;
+		grid-template-columns: 15% 65% 20%;
+		padding: 0px;
+		border-style: solid;
+		border-color: rgba(0, 0, 255, 0.8);
+		border-width: thick;
+		}
+        
+	.file-input {
+		vertical-align: top;
+		font-size: 90%;
+		background-color: rgba(39, 222, 245, 0.3);
+		border-style: solid;
+		border-color: black;
+		border-width: thin;
+		}
+	
+	.graph-block {
+		place-content: stretch;
+		background-color: rgba(39, 222, 245, 0.3);
+		display: flex;
+		justify-content: center;
+		width: 90%
+		border-style: solid;
+		border-color: black;
+		border-width: thin;
+		}
+	
+	.graph-settings	{
+		font-size: 90%;
+		background-color: rgba(39, 222, 245, 0.3);
+		border-style: solid;
+		border-color: black;
+		border-width: thin;
+		}
 
+	.col-25 {
+		float: left;
+		width: 25%;
+		margin-top: 6px;
+		margin-bottom: 6px;
+		}
+
+	.col-75 {
+		float: left;
+		width: 75%;
+		margin-top: 6px;
+		margin-bottom: 6px;
+		}
+
+	.col-60 {
+		float: left;
+		width: 60%;
+		margin-top: 6px;
+		margin-bottom: 6px;
+		}
+
+	.col-40 {
+		float: left;
+		width: 40%;
+		margin-top: 6px;
+		margin-bottom: 6px;
+		}
+</style>
+
+<!-- 
 <style>
 	.master-layout{
 		width: 880px;
@@ -41,7 +108,8 @@
 		}
 			
 </style>
-
+-->
+	
 <div class="grid-container">
 	<div class="row overflow-hidden" id="content">
 		<div class="col mh-100 float-left" id="main">
